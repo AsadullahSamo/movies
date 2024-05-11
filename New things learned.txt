@@ -1,0 +1,3 @@
+exploring TMDB (movie api)
+Promise.all() method of JS
+debouncing techniques to handle excessive API calls
