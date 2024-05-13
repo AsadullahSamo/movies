@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
-import logo from '../../public/assets/icons/logo.svg'
+import starIcon from '../../public/assets/icons/star-icon.svg'
 import Image from 'next/image'
-import useDebounce from '@/hooks/useDebounce'
-import searchIcon from '../../public/assets/icons/search-icon.svg'
 import fonts from '../../styles/Fonts.module.css'
+import Link from 'next/link'
+import MovieSearch from './MovieSearch'
 
 export default function FindMovies() {
 
   const [active, setActive] = useState("movies")
   const [premierActive, setPremierActive] = useState("premierMovies")
-  const [movies, setMovies] = useState([])
   const [featuredToday, setFeaturedToday] = useState([])
   const [premiersAndAnnouncements, setPremiersAndAnnouncements] = useState([])
 
@@ -83,38 +82,10 @@ export default function FindMovies() {
     fetchPremiersAndAnnouncements("https://api.themoviedb.org/3/tv/on_the_air")
   }
   
-  const loadDataDebounced = useDebounce(handleChange, 1000)
 
   return (
     <div className='bg-black min-h-screen'>
-      <Image className="py-12 pl-12" src={logo} alt="logo" width={200} height={200} />
-
-      <div className="flex flex-col items-center gap-2 -mt-[5.5rem] overflow-hidden">
-        <div className='flex items-start gap-12'>
-          <Image className={`absolute top-[7%] mx-2`} src={searchIcon} alt="search" width={25} height={25} />
-          <input placeholder='Search for movies OR TV Series' type='text' onChange={(e) => loadDataDebounced(e)} className={`rounded-t-xl ${fonts.latoBold} pl-10 h-[7vh] w-[60vw] bg-[#F6F6F6] mb-3`} />
-        </div>
-
-        {movies && movies.length > 0 &&
-          <div className='h-[83vh] w-[60.4%] mt-[-18px] bg-[#212121]'>
-              {movies.map((movie, index) => (
-                index < 5 &&
-                  <div className='mt-2 flex flex-col gap-2'>
-                    <div className='flex gap-5'>
-                      <Image className='mx-2' src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} width={75} height={75} alt="" />
-                      <div className='flex flex-col gap-2'>
-                        <p className='mt-2 text-white text-xl'> {movie.title} </p>
-                        <p className='text-[#757575] -mt-2'> {movie.release_date.toString().substring(0, 4)} </p>
-                        <p className='text-white text-[18px]'> 
-                          {movie.cast}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              }
-          </div> 
-        }
+      <MovieSearch />
 
       {/* Featured today Movies/TV Series */}
       <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Featured Today </p>
@@ -129,12 +100,17 @@ export default function FindMovies() {
       <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
         {featuredToday.results && featuredToday.results.map((movie, index) => (
           <div className='mt-2 flex flex-col gap-2 m-3'>
-          <Image style={{ minWidth: '200px', objectFit: 'cover' }} className='rounded-xl self-center mx-1'
-            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-            width={200}
-            height={200}
-            alt='Poster image' 
-          />
+          {active === "movies" ?
+            <Link href={`/components/${movie.title}/${movie.id}`}>
+              <Image style={{ minWidth: '200px', objectFit: 'cover' }} className='rounded-xl self-center mx-1' src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} width={200} height={200} alt='Poster image'/>
+            </Link>
+          :
+            <Image style={{ minWidth: '200px', objectFit: 'cover' }} className='rounded-xl self-center mx-1' src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} width={200} height={200} alt='Poster image'/>
+          }
+          <div className='flex gap-2 -mt-11 ml-1 w-16 h-9 bg-black justify-start'>
+            <Image className='ml-1 self-center' src={starIcon} width={20} height={20} alt='star icon' />
+            <p className={`${fonts.latoBold} text-white self-center`}> {Number(movie.vote_average).toFixed(1)} </p>
+          </div>
             <p className='w-[80%] self-center text-center mt-2 text-[#c0c0c0]'> {active === "movies" ? movie.title : movie.name} </p>
           </div>
         ))}
@@ -153,19 +129,23 @@ export default function FindMovies() {
       <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
         {premiersAndAnnouncements.results && premiersAndAnnouncements.results.map((movie, index) => (
           <div className='mt-2 flex flex-col gap-2 m-3'>
-          <Image style={{ minWidth: '200px', objectFit: 'cover' }} className='rounded-xl self-center mx-1'
-            src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-            width={200}
-            height={200}
-            alt='Poster image' 
-          />
-            <p className='w-[80%] self-center text-center mt-2 text-[#c0c0c0]'> {premierActive === "premierMovies" ? movie.title : movie.name} </p>
+          {premierActive === "premierMovies" ?
+            <Link href={`/components/${movie.title}/${movie.id}`}>
+              <Image style={{ minWidth: '200px', objectFit: 'cover' }} className='rounded-xl self-center mx-1' src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} width={200} height={200} alt='Poster image'/>
+            </Link>
+          :
+            <Image style={{ minWidth: '200px', objectFit: 'cover' }} className='rounded-xl self-center mx-1' src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} width={200} height={200} alt='Poster image'/>
+          }
+          <div className='flex gap-2 -mt-11 ml-1 w-16 h-9 bg-black justify-start'>
+            <Image className='ml-1 self-center' src={starIcon} width={20} height={20} alt='star icon' />
+            <p className={`${fonts.latoBold} text-white self-center`}> {Number(movie.vote_average).toFixed(1)} </p>
+          </div>
+          <p className='w-[80%] self-center text-center mt-2 text-[#c0c0c0]'> {premierActive === "premierMovies" ? movie.title : movie.name} </p>
           </div>
         ))}
       </div>
 
 
-      </div>
     </div>
   )
 }
