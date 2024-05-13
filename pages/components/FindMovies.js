@@ -4,30 +4,43 @@ import Image from 'next/image';
 import fonts from '../../styles/Fonts.module.css';
 import Link from 'next/link';
 import MovieSearch from './MovieSearch';
+import Error from './Error';
 
 export default function FindMovies() {
   const [active, setActive] = useState('movies');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState("loading...");
   const [premierActive, setPremierActive] = useState('premierMovies');
   const [featuredToday, setFeaturedToday] = useState([]);
   const [premiersAndAnnouncements, setPremiersAndAnnouncements] = useState([]);
 
   const fetchFeaturedContent = (url) => {
-    fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
+    setTimeout(() => {
+      fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
       .then((response) => response.json())
       .then((data) => {
         setFeaturedToday(data);
-        setLoading(false);
-      });
+        setLoading("loaded");
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading("error");
+      })
+    }, 1000);
   }; // end of fetchFeaturedContent
 
   const fetchPremiersAndAnnouncements = (url) => {
-    fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
+    setTimeout(() => {
+      fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
       .then((response) => response.json())
       .then((data) => {
         setPremiersAndAnnouncements(data);
-        setLoading(false);
-      });
+        setLoading("loaded");
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading("error");
+      })
+    }, 1000);
   }; // end of fetchPremiersAndAnnouncements
 
   useEffect(() => {
@@ -84,7 +97,7 @@ export default function FindMovies() {
       </nav>
 
       <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
-        {!loading ? (
+        {loading === "loaded" ? (
           <>
             {featuredToday.results &&
               featuredToday.results.map((movie, index) => (
@@ -121,16 +134,22 @@ export default function FindMovies() {
                 </div>
               ))}
           </>
+        ) : 
+        loading === "error" ? (
+          <>
+            <Error />
+          </>
         ) : (
           <>
             {Array.from({ length: 10 }).map((_, index) => (
-              <div key={index} className='ml-5 animate-pulse rounded-xl h-60 w-[500px] bg-[#585858]'>
+              <div key={index} className='mt-5 ml-5 animate-pulse rounded-xl h-60 w-[500px] bg-[#585858]'>
                 {' '}
               </div>
             ))}
           </>
         )}
-      </div>
+          
+          </div>
 
       {/* Premiers and Announcements */}
       <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Premiers and Announcements </p>
@@ -157,7 +176,7 @@ export default function FindMovies() {
       </nav>
 
       <div className='max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
-        {!loading ? (
+        {loading === "loaded" ? (
           <>
             {premiersAndAnnouncements.results &&
               premiersAndAnnouncements.results.map((movie, index) => (
@@ -194,10 +213,15 @@ export default function FindMovies() {
                 </div>
               ))}
           </>
+        )  : 
+        loading === "error" ? (
+          <>
+            <Error />
+          </>
         ) : (
           <>
             {Array.from({ length: 10 }).map((_, index) => (
-              <div key={index} className='ml-5 animate-pulse rounded-xl h-60 w-[500px] bg-[#585858]'>
+              <div key={index} className='mt-5 ml-5 animate-pulse rounded-xl h-60 w-[500px] bg-[#585858]'>
                 {' '}
               </div>
             ))}

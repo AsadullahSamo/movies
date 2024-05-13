@@ -4,7 +4,7 @@ import fonts from '../../styles/Fonts.module.css'
 import starIcon from '../../public/assets/icons/star-icon.svg'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-
+import Error from './Error'
 export default function Details() {
 
 	const router = useRouter()
@@ -12,56 +12,61 @@ export default function Details() {
 	const [omdbData, setOmdbData] = useState([])
 	const [actors, setActors] = useState('')
 	const [month, setMonth] = useState('')
-	const [loading, setLoading]	= useState(true)
+	const [loading, setLoading]	= useState("loading...")
 
 	useEffect(() => {
 		if (router.isReady) {
-			fetch(`https://api.themoviedb.org/3/movie/${router.query?.details[1]}?api_key=${process.env.TMDB_API_KEY}`)
-			.then((response) => response.json())
-			.then((data) => {
-				setTmdbData(data)
-				setLoading(false)
-				setMonth(data.release_date.substring(5, 7))
-				if (month === '01') setMonth('January')
-				else if (month === '02') setMonth('February')
-				else if (month === '03') setMonth('March')
-				else if (month === '04') setMonth('April')
-				else if (month === '05') setMonth('May')
-				else if (month === '06') setMonth('June')
-				else if (month === '07') setMonth('July')
-				else if (month === '08') setMonth('August')
-				else if (month === '09') setMonth('September')
-				else if (month === '10') setMonth('October')
-				else if (month === '11') setMonth('November')
-				else setMonth('December')
-
-			})
-			.catch((error) => {
-				console.error("Error fetching data:", error)
-				setLoading(true)
-			})
+			setTimeout(() => {
+				fetch(`https://api.themoviedb.org/3/movie/${router.query?.details[1]}?api_key=${process.env.TMDB_API_KEY}`)
+				.then((response) => response.json())
+				.then((data) => {
+					setTmdbData(data)
+					setLoading("loaded")
+					setMonth(data.release_date.substring(5, 7))
+					if (month === '01') setMonth('January')
+					else if (month === '02') setMonth('February')
+					else if (month === '03') setMonth('March')
+					else if (month === '04') setMonth('April')
+					else if (month === '05') setMonth('May')
+					else if (month === '06') setMonth('June')
+					else if (month === '07') setMonth('July')
+					else if (month === '08') setMonth('August')
+					else if (month === '09') setMonth('September')
+					else if (month === '10') setMonth('October')
+					else if (month === '11') setMonth('November')
+					else setMonth('December')
+				})
+				.catch((error) => {
+					console.error("Error fetching data:", error)
+					setLoading("error")
+				})
+			}, 1000)
 		
-			fetch(`http://www.omdbapi.com/?t=${router.query?.details[0]}&apikey=1ce48dc9`)
-			.then((response) => response.json())
-			.then((data) => {
-				setOmdbData(data)
-				setLoading(false)
-			})
-			.catch((error) => {
-				console.error("Error fetching data:", error)
-				setLoading(true)
-			})
+			setTimeout(() => {
+				fetch(`http://www.omdbapi.com/?t=${router.query?.details[0]}&apikey=1ce48dc9`)
+				.then((response) => response.json())
+				.then((data) => {
+					setOmdbData(data)
+					setLoading("loaded")
+				})
+				.catch((error) => {
+					console.error("Error fetching data:", error)
+					setLoading("error")
+				})
+			}, 1000)
 
-			fetch(`https://api.themoviedb.org/3/movie/${router.query.details[1]}/credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`)
-			.then((response) => response.json())
-			.then((data, index) => {
-				setActors(data.cast.slice(0, 3).map(actor => actor.name).join(', '))
-				setLoading(false)
-			})
-			.catch((error) => {
-				console.error("Error fetching data:", error)
-				setLoading(true)
-			})
+			setTimeout(() => {
+				fetch(`https://api.themoviedb.org/3/movie/${router.query.details[1]}/credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`)
+				.then((response) => response.json())
+				.then((data, index) => {
+					setActors(data.cast.slice(0, 3).map(actor => actor.name).join(', '))
+					setLoading("loaded")
+				})
+				.catch((error) => {
+					console.error("Error fetching data:", error)
+					setLoading("error")
+				})
+			}, 1000)
 		}
 	}, [router.isReady, router.query.details])
 
@@ -84,15 +89,20 @@ export default function Details() {
 			</div>
 
 			<section>
-				{!loading ? (
+				{loading === "loaded" ? (
 					<div className='flex justify-center ml-52 gap-5'>
-						<Image src={`https://image.tmdb.org/t/p/original${tmdbData.poster_path}`} className="pb-10 rounded-xl" style={{objectFit: "cover"}} width={275} height={275} alt='Movie Poster' />
+						{tmdbData.poster_path ?
+							<Image src={`https://image.tmdb.org/t/p/original${tmdbData.poster_path}`} className="pb-10 rounded-xl" style={{objectFit: "cover"}} width={275} height={275} alt='Movie Poster' />
+						:
+							<div className='bg-[#585858] rounded-xl h-96 w-72 animate-pulse'></div>
+						}
 						<div>
-							
-							<div className='ml-3'>
-								<div className='border-[1px] border-white bg-yellow-300 w-[15vw] h-[40px] rounded-l-md inline-block' style={{transform: 'skewX(-20deg)'}}> <p className={`${fonts.latoBold} text-center pt-2`}> Awards and nominations </p> </div>
-								<div className='-ml-5 border-[1px] border-white bg-black transform w-[30vw] h-[40px] rounded-r-md inline-block' style={{transform: 'skewX(-30deg)'}}> <p className={`${fonts.latoBold} pl-5 pt-2 text-white`}> {omdbData && omdbData.Awards} </p> </div>
-							</div>
+							{omdbData.Awards &&
+								<div className='ml-3'>
+									<div className='border-[1px] border-white bg-yellow-300 w-[15vw] h-[40px] rounded-l-md inline-block' style={{transform: 'skewX(-20deg)'}}> <p className={`${fonts.latoBold} text-center pt-2`}> Awards and nominations </p> </div>
+									<div className='-ml-5 border-[1px] border-white bg-black transform w-[30vw] h-[40px] rounded-r-md inline-block' style={{transform: 'skewX(-30deg)'}}> <p className={`${fonts.latoBold} pl-5 pt-2 text-white`}> {omdbData.Awards} </p> </div>
+								</div>
+							}
 							<ul className='mt-5 flex gap-5'>
 								{tmdbData.genres && tmdbData.genres.map((genre) => (								
 									<li className={`text-[#cdcdcd] rounded-full bg-[#1b1b1b] py-[6px] px-5 ${fonts.latoMedium}`}> {genre.name} </li>
@@ -108,8 +118,10 @@ export default function Details() {
 
 						</div>
 					</div>
-			) : (
+			) : loading === "loading..." ? (
 				<div className='animate-pulse rounded-xl h-96 mx-10 pb-32 w-72 bg-[#585858]'></div>
+			) : (
+				<> <Error /> </>
 			)}
 			</section>
 
