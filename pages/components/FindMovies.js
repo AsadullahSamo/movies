@@ -8,17 +8,18 @@ import Error from './Error';
 
 export default function FindMovies() {
   const [active, setActive] = useState('movies');
-  const [loading, setLoading] = useState("loading...");
+  const [featuredLoading, setFeaturedLoading] = useState("loading...");
+  const [premierLoading, setPremierLoading] = useState("loading...");
   const [premierActive, setPremierActive] = useState('premierMovies');
   const [featuredToday, setFeaturedToday] = useState([]);
   const [premiersAndAnnouncements, setPremiersAndAnnouncements] = useState([]);
 
-  const fetchFeaturedContent = (url) => {
+  const fetchContent = (url, setData, setLoading) => {
     setTimeout(() => {
       fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
       .then((response) => response.json())
       .then((data) => {
-        setFeaturedToday(data);
+        setData(data);
         setLoading("loaded");
       })
       .catch((error) => {
@@ -28,44 +29,49 @@ export default function FindMovies() {
     }, 1000);
   }; // end of fetchFeaturedContent
 
-  const fetchPremiersAndAnnouncements = (url) => {
-    setTimeout(() => {
-      fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setPremiersAndAnnouncements(data);
-        setLoading("loaded");
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading("error");
-      })
-    }, 1000);
-  }; // end of fetchPremiersAndAnnouncements
+  // const fetchPremiersAndAnnouncements = (url) => {
+  //   setTimeout(() => {
+  //     fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setPremiersAndAnnouncements(data);
+  //       setLoading("loaded");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //       setLoading("error");
+  //     })
+  //   }, 1000);
+  // }; // end of fetchPremiersAndAnnouncements
 
   useEffect(() => {
-    fetchFeaturedContent('https://api.themoviedb.org/3/trending/movie/day');
-    fetchPremiersAndAnnouncements('https://api.themoviedb.org/3/movie/upcoming');
+    fetchContent('https://api.themoviedb.org/3/trending/movie/day', setFeaturedToday, setFeaturedLoading);
+    // fetchPremiersAndAnnouncements('https://api.themoviedb.org/3/movie/upcoming');
+    fetchContent('https://api.themoviedb.org/3/movie/upcoming', setPremiersAndAnnouncements, setPremierLoading);
   }, []);
 
   const showMovies = () => {
     setActive('movies');
-    fetchFeaturedContent('https://api.themoviedb.org/3/trending/movie/day');
+    setFeaturedLoading("loading...");
+    fetchContent('https://api.themoviedb.org/3/trending/movie/day', setFeaturedToday, setFeaturedLoading);
   }; // end of showMovies
 
   const showSeries = () => {
     setActive('series');
-    fetchFeaturedContent('https://api.themoviedb.org/3/tv/airing_today');
+    setFeaturedLoading("loading...");
+    fetchContent('https://api.themoviedb.org/3/tv/airing_today', setFeaturedToday, setFeaturedLoading);
   }; // end of showSeries
 
   const showPremierMovies = () => {
     setPremierActive('premierMovies');
-    fetchPremiersAndAnnouncements('https://api.themoviedb.org/3/movie/upcoming');
+    setPremierLoading("loading...");
+    fetchContent('https://api.themoviedb.org/3/movie/upcoming', setPremiersAndAnnouncements, setPremierLoading);
   };
 
   const showPremierSeries = () => {
     setPremierActive('premierSeries');
-    fetchPremiersAndAnnouncements('https://api.themoviedb.org/3/tv/on_the_air');
+    setPremierLoading("loading...");
+    fetchContent('https://api.themoviedb.org/3/tv/on_the_air', setPremiersAndAnnouncements, setPremierLoading);
   };
 
   return (
@@ -97,7 +103,7 @@ export default function FindMovies() {
       </nav>
 
       <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
-        {loading === "loaded" ? (
+        {featuredLoading === "loaded" ? (
           <>
             {featuredToday.results &&
               featuredToday.results.map((movie, index) => (
@@ -135,7 +141,7 @@ export default function FindMovies() {
               ))}
           </>
         ) : 
-        loading === "error" ? (
+        featuredLoading === "error" ? (
           <>
             <Error />
           </>
@@ -149,7 +155,7 @@ export default function FindMovies() {
           </>
         )}
           
-          </div>
+      </div>
 
       {/* Premiers and Announcements */}
       <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Premiers and Announcements </p>
@@ -176,7 +182,7 @@ export default function FindMovies() {
       </nav>
 
       <div className='max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
-        {loading === "loaded" ? (
+        {premierLoading === "loaded" ? (
           <>
             {premiersAndAnnouncements.results &&
               premiersAndAnnouncements.results.map((movie, index) => (
@@ -214,7 +220,7 @@ export default function FindMovies() {
               ))}
           </>
         )  : 
-        loading === "error" ? (
+        premierLoading === "error" ? (
           <>
             <Error />
           </>
