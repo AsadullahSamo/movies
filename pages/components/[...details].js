@@ -108,13 +108,13 @@ export default function Details() {
 									<li key={index} className={`text-[#cdcdcd] rounded-full bg-[#1b1b1b] py-[6px] px-5 ${fonts.latoMedium}`}> {genre.name} </li>
 								))}
 							</ul>
-							<p className={`mx-auto w-[90%] lg:w-[60%] text-[#cdcdcd] lg:mx-3 ${fonts.latoMedium} my-5`}> {tmdbData.overview} </p>
-							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Director: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.Director} </span> </p>
-							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Writer: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.Writer} </span> </p>
-							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Stars: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {actors} </span> </p>
-							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Countries of Origin: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.Country} </span> </p>
-							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Release date: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {`${month} ${String(tmdbData.release_date).substring(8)}, ${String(tmdbData.release_date).substring(0, 4)}`} </span> </p>
-							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Box Office: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.BoxOffice} </span> </p>
+							<p className={`w-[90%] lg:w-[60%] text-[#cdcdcd] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-5`}> {tmdbData.overview} </p>
+							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Director: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.Director} </span> </p>
+							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Writer: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.Writer} </span> </p>
+							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Stars: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {actors} </span> </p>
+							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Countries of Origin: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.Country} </span> </p>
+							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Release date: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {`${month} ${String(tmdbData.release_date).substring(8)}, ${String(tmdbData.release_date).substring(0, 4)}`} </span> </p>
+							<p className={`text-[16px] lg:text-[18px] w-[60%] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-2`}> <span className='text-[#615f61] text-[18px]'> Box Office: </span> <span className='text-[#cdcdcd] text-[16px] lg:text-[18px]'> {omdbData.BoxOffice} </span> </p>
 
 						</div>
 					</div>

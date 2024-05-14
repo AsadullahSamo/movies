@@ -59,7 +59,7 @@ export default function FindMovies() {
   };
 
   return (
-    <div className='bg-black min-h-screen'>
+    <div className='bg-black min-h-screen overflow-hidden'>
       <MovieSearch />
 
       {/* Featured today Movies/TV Series */}
@@ -86,7 +86,7 @@ export default function FindMovies() {
         <hr className='mt-[-2px] border-red-500 border-b-2' />
       </nav>
 
-      <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
+      <div className='container mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
         {featuredLoading === "loaded" ? (
           <>
             {featuredToday.results &&
@@ -165,12 +165,12 @@ export default function FindMovies() {
         <hr className='mt-[-2px] border-red-500 border-b-2' />
       </nav>
 
-      <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
+      <div className={`container max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap`}>
         {premierLoading === "loaded" ? (
           <>
             {premiersAndAnnouncements.results &&
               premiersAndAnnouncements.results.map((movie, index) => (
-                <div key={index} className='mt-2 flex flex-col gap-2 m-3'>
+                <div key={index} className='mt-2 flex flex-col gap-2 m-3 mb-10'>
                   {premierActive === 'premierMovies' ? (
                     <Link href={`/components/${movie.title}/${movie.id}`}>
                       <Image

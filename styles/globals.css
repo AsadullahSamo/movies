@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 /* width */
-::-webkit-scrollbar {
+.container::-webkit-scrollbar {
     width: 5px;
 }
  
 /* Track */
-::-webkit-scrollbar-track {
+.container::-webkit-scrollbar-track {
     margin-left: 10px;
     margin-right: 20px;
     background: #888;
@@ -16,12 +16,12 @@
 }
  
 /* Handle */
-::-webkit-scrollbar-thumb {
+.container::-webkit-scrollbar-thumb {
     background: gold;
     border-radius: 5px;
 }
  
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.container::-webkit-scrollbar-thumb:hover {
     background: yellowgreen;
 }
