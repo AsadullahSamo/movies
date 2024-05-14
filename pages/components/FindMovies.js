@@ -29,24 +29,8 @@ export default function FindMovies() {
     }, 1000);
   }; // end of fetchFeaturedContent
 
-  // const fetchPremiersAndAnnouncements = (url) => {
-  //   setTimeout(() => {
-  //     fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setPremiersAndAnnouncements(data);
-  //       setLoading("loaded");
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //       setLoading("error");
-  //     })
-  //   }, 1000);
-  // }; // end of fetchPremiersAndAnnouncements
-
   useEffect(() => {
     fetchContent('https://api.themoviedb.org/3/trending/movie/day', setFeaturedToday, setFeaturedLoading);
-    // fetchPremiersAndAnnouncements('https://api.themoviedb.org/3/movie/upcoming');
     fetchContent('https://api.themoviedb.org/3/movie/upcoming', setPremiersAndAnnouncements, setPremierLoading);
   }, []);
 
@@ -80,7 +64,7 @@ export default function FindMovies() {
 
       {/* Featured today Movies/TV Series */}
       <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Featured Today </p>
-      <nav className='mt-5 self-start mx-12 text-xl w-[96%]'>
+      <nav className='mt-5 self-start mx-12 text-xl w-[80%] lg:w-[96%]'>
         <ul className='flex gap-5'>
           <li
             className={`hover:cursor-pointer ${
@@ -102,7 +86,7 @@ export default function FindMovies() {
         <hr className='mt-[-2px] border-red-500 border-b-2' />
       </nav>
 
-      <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
+      <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
         {featuredLoading === "loaded" ? (
           <>
             {featuredToday.results &&
@@ -142,9 +126,9 @@ export default function FindMovies() {
           </>
         ) : 
         featuredLoading === "error" ? (
-          <>
+          <div className='mx-auto'>
             <Error />
-          </>
+          </div>
         ) : (
           <>
             {Array.from({ length: 10 }).map((_, index) => (
@@ -159,7 +143,7 @@ export default function FindMovies() {
 
       {/* Premiers and Announcements */}
       <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Premiers and Announcements </p>
-      <nav className='mt-5 self-start mx-12 text-xl w-[96%]'>
+      <nav className='mt-5 self-start mx-12 text-xl w-[80%] lg:w-[96%]'>
         <ul className='flex gap-5'>
           <li
             className={`hover:cursor-pointer ${
@@ -181,7 +165,7 @@ export default function FindMovies() {
         <hr className='mt-[-2px] border-red-500 border-b-2' />
       </nav>
 
-      <div className='max-w-[100%] overflow-auto ml-1 mr-1 self-start flex h-[450px] gap-5'>
+      <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
         {premierLoading === "loaded" ? (
           <>
             {premiersAndAnnouncements.results &&
@@ -221,9 +205,9 @@ export default function FindMovies() {
           </>
         )  : 
         premierLoading === "error" ? (
-          <>
+          <div className='mx-auto'>
             <Error />
-          </>
+          </div>
         ) : (
           <>
             {Array.from({ length: 10 }).map((_, index) => (
