@@ -43,7 +43,7 @@ export default function Details() {
 			}, 1000)
 		
 			setTimeout(() => {
-				fetch(`http://www.omdbapi.com/?t=${router.query?.details[0]}&apikey=1ce48dc9`)
+				fetch(`https://www.omdbapi.com/?t=${router.query?.details[0]}&apikey=${process.env.OMDB_API_KEY}`)
 				.then((response) => response.json())
 				.then((data) => {
 					setOmdbData(data)
