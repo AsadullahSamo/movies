@@ -2,26 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* width */
-.container::-webkit-scrollbar {
-    width: 5px;
+
+::-webkit-scrollbar {
+    width: 15px;       /* width is used as size for vertical scrollbar */
+    height: 15px;      /* height is used as size for horizontal scrollbar */
 }
  
-/* Track */
-.container::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     margin-left: 10px;
     margin-right: 20px;
     background: #888;
     border-radius: 5px;
 }
  
-/* Handle */
-.container::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: gold;
     border-radius: 5px;
 }
- 
-/* Handle on hover */
-.container::-webkit-scrollbar-thumb:hover {
+
+
+::-webkit-scrollbar-thumb:hover {
     background: yellowgreen;
 }
