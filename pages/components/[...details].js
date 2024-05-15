@@ -148,7 +148,8 @@ export default function Details() {
 
 				<div className='flex justify-center py-10 flex-wrap gap-5 '>
 					{cast && cast.map((actor, index) => (
-							<div key={index} className='border-2 border-gray-100 w-[20%] lg:w-[100%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
+						<div key={index}className='border-2 border-gray-100 w-[20%] lg:w-[15%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
+								<div key={index} className='border-2 border-gray-100 w-[20%] lg:w-[100%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
 									{actor.profile_path ?
 										<Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' />
 									:
@@ -156,7 +157,8 @@ export default function Details() {
 									}
 									<p className={`${fonts.latoBold} text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
 									<p className={`${fonts.latoBold} text-center pt-1 text-white`}> {actor.character} </p> 
-							</div>
+								</div>
+						</div>
 						))}
 
 				</div>
