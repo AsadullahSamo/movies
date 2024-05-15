@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Error from './Error'
+import { TMDB_URL, OMDB_URL, TMDB_IMAGE_URL } from '../URLs'
 
 export default function Details() {
 
@@ -19,7 +20,7 @@ export default function Details() {
 	useEffect(() => {
 		if (router.isReady) {
 			setTimeout(() => {
-				fetch(`https://api.themoviedb.org/3/movie/${router.query?.details[1]}?api_key=${process.env.TMDB_API_KEY}`)
+				fetch(`${TMDB_URL}/${router.query?.details[1]}?api_key=${process.env.TMDB_API_KEY}`)
 				.then((response) => response.json())
 				.then((data) => {
 					setTmdbData(data)
@@ -45,7 +46,7 @@ export default function Details() {
 			}, 1000)
 		
 			setTimeout(() => {
-				fetch(`https://www.omdbapi.com/?t=${router.query?.details[0]}&apikey=${process.env.OMDB_API_KEY}`)
+				fetch(`${OMDB_URL}?t=${router.query?.details[0]}&apikey=${process.env.OMDB_API_KEY}`)
 				.then((response) => response.json())
 				.then((data) => {
 					setOmdbData(data)
@@ -58,7 +59,7 @@ export default function Details() {
 			}, 1000)
 
 			setTimeout(() => {
-				fetch(`https://api.themoviedb.org/3/movie/${router.query.details[1]}/credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`)
+				fetch(`${TMDB_URL}/${router.query.details[1]}/credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`)
 				.then((response) => response.json())
 				.then((data, index) => {
 					setActors(data.cast.slice(0, 3).map(actor => actor.name).join(', '))
@@ -101,7 +102,7 @@ export default function Details() {
 					{loading === "loaded" ? (
 						<div className='flex lg:flex-row lg:justify-center lg:ml-52 gap-5 flex-col items-center'>
 							{tmdbData.poster_path ?
-								<Image src={`https://image.tmdb.org/t/p/original${tmdbData.poster_path}`} className="pb-10 rounded-xl" style={{objectFit: "cover"}} width={275} height={275} alt='Movie Poster' />
+								<Image src={`${TMDB_IMAGE_URL}${tmdbData.poster_path}`} className="pb-10 rounded-xl" style={{objectFit: "cover"}} width={275} height={275} alt='Movie Poster' />
 							:
 								<div className='bg-[#585858] rounded-xl h-96 w-72 animate-pulse'></div>
 							}

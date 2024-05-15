@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* width is used as size for vertical scrollbar */
+/* height is used as size for horizontal scrollbar */
 
 ::-webkit-scrollbar {
-    width: 15px;       /* width is used as size for vertical scrollbar */
-    height: 15px;      /* height is used as size for horizontal scrollbar */
+    width: 10px;       
+    height: 10px;      
 }
  
 ::-webkit-scrollbar-track {
@@ -20,6 +22,11 @@
     border-radius: 5px;
 }
 
+
+::-webkit-scrollbar:hover {
+    width: 10px;
+    height: 10px;
+}
 
 ::-webkit-scrollbar-thumb:hover {
     background: yellowgreen;

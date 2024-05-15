@@ -6,6 +6,7 @@ import Link from 'next/link';
 import MovieSearch from './MovieSearch';
 import Error from './Error';
 import Head from 'next/head'
+import { TMDB_URL, TMDB_IMAGE_URL, FEATURED_TODAY_MOVIES_URL, FEATURED_TODAY_SERIES_URL, PREMIER_MOVIES_URL, PREMIER_SERIES_URL } from '../URLs';
 
 export default function FindMovies() {
   const [active, setActive] = useState('movies');
@@ -16,47 +17,46 @@ export default function FindMovies() {
   const [premiersAndAnnouncements, setPremiersAndAnnouncements] = useState([]);
 
   const fetchContent = (url, setData, setLoading) => {
-    setTimeout(() => {
-      fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`)
-      .then((response) => response.json())
-      .then((data) => {
+    setTimeout(async () => {
+      try {
+        const response = await fetch(`${url}?api_key=${process.env.TMDB_API_KEY}`);
+        const data = await response.json();
         setData(data);
         setLoading("loaded");
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
         setLoading("error");
-      })
+      }
     }, 1000);
   }; // end of fetchFeaturedContent
 
   useEffect(() => {
-    fetchContent('https://api.themoviedb.org/3/trending/movie/day', setFeaturedToday, setFeaturedLoading);
-    fetchContent('https://api.themoviedb.org/3/movie/upcoming', setPremiersAndAnnouncements, setPremierLoading);
+    fetchContent(FEATURED_TODAY_MOVIES_URL, setFeaturedToday, setFeaturedLoading);
+    fetchContent(PREMIER_MOVIES_URL, setPremiersAndAnnouncements, setPremierLoading);
   }, []);
 
-  const showMovies = () => {
+  const showFeaturedMovies = () => {
     setActive('movies');
     setFeaturedLoading("loading...");
-    fetchContent('https://api.themoviedb.org/3/trending/movie/day', setFeaturedToday, setFeaturedLoading);
+    fetchContent(FEATURED_TODAY_MOVIES_URL, setFeaturedToday, setFeaturedLoading);
   }; // end of showMovies
 
-  const showSeries = () => {
+  const showFeaturedSeries = () => {
     setActive('series');
     setFeaturedLoading("loading...");
-    fetchContent('https://api.themoviedb.org/3/tv/airing_today', setFeaturedToday, setFeaturedLoading);
+    fetchContent(FEATURED_TODAY_SERIES_URL, setFeaturedToday, setFeaturedLoading);
   }; // end of showSeries
 
   const showPremierMovies = () => {
     setPremierActive('premierMovies');
     setPremierLoading("loading...");
-    fetchContent('https://api.themoviedb.org/3/movie/upcoming', setPremiersAndAnnouncements, setPremierLoading);
+    fetchContent(PREMIER_MOVIES_URL, setPremiersAndAnnouncements, setPremierLoading);
   };
 
   const showPremierSeries = () => {
     setPremierActive('premierSeries');
     setPremierLoading("loading...");
-    fetchContent('https://api.themoviedb.org/3/tv/on_the_air', setPremiersAndAnnouncements, setPremierLoading);
+    fetchContent(PREMIER_SERIES_URL, setPremiersAndAnnouncements, setPremierLoading);
   };
 
   return (
@@ -80,7 +80,7 @@ export default function FindMovies() {
               className={`hover:cursor-pointer ${
                 active === 'movies' ? 'text-white border-b-4 border-white' : 'text-[#7d7d7d]'
               } pb-[2px] px-5`}
-              onClick={showMovies}>
+              onClick={showFeaturedMovies}>
               {' '}
               Movies{' '}
             </li>
@@ -88,7 +88,7 @@ export default function FindMovies() {
               className={`hover:cursor-pointer ${
                 active === 'series' ? 'text-white border-b-4 border-white' : 'text-[#7d7d7d]'
               } pb-[2px] px-5`}
-              onClick={showSeries}>
+              onClick={showFeaturedSeries}>
               {' '}
               Series{' '}
             </li>
@@ -96,7 +96,7 @@ export default function FindMovies() {
           <hr className='mt-[-2px] border-red-500 border-b-2' />
         </nav>
 
-        <div className='mb-10 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
+        <div className='mb-10 max-w-[100%] overflow-hidden hover:overflow-auto transition-all duration-500 ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
           {featuredLoading === "loaded" ? (
             <>
               {featuredToday.results &&
@@ -107,7 +107,7 @@ export default function FindMovies() {
                         <Image
                           style={{ minWidth: '200px', objectFit: 'cover' }}
                           className='rounded-xl self-center mx-1'
-                          src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                          src={`${TMDB_IMAGE_URL}${movie.poster_path}`}
                           width={200}
                           height={200}
                           alt='Poster image'
@@ -117,7 +117,7 @@ export default function FindMovies() {
                       <Image
                         style={{ minWidth: '200px', objectFit: 'cover' }}
                         className='rounded-xl self-center mx-1'
-                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                        src={`${TMDB_IMAGE_URL}${movie.poster_path}`}
                         width={200}
                         height={200}
                         alt='Poster image'
@@ -175,7 +175,7 @@ export default function FindMovies() {
           <hr className='mt-[-2px] border-red-500 border-b-2' />
         </nav>
 
-        <div className={`mb-5 max-w-[100%] overflow-auto ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap`}>
+        <div className={`mb-5 max-w-[100%] overflow-hidden hover:overflow-auto transition-all duration-500 ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap`}>
           {premierLoading === "loaded" ? (
             <>
               {premiersAndAnnouncements.results &&
@@ -186,7 +186,7 @@ export default function FindMovies() {
                         <Image
                           style={{ minWidth: '200px', objectFit: 'cover' }}
                           className='rounded-xl self-center mx-1'
-                          src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                          src={`${TMDB_IMAGE_URL}${movie.poster_path}`}
                           width={200}
                           height={200}
                           alt='Poster image'
@@ -196,7 +196,7 @@ export default function FindMovies() {
                       <Image
                         style={{ minWidth: '200px', objectFit: 'cover' }}
                         className='rounded-xl self-center mx-1'
-                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                        src={`${TMDB_IMAGE_URL}${movie.poster_path}`}
                         width={200}
                         height={200}
                         alt='Poster image'

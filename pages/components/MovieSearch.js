@@ -6,8 +6,9 @@ import searchIcon from '../../public/assets/icons/search-icon.svg'
 import fonts from '../../styles/Fonts.module.css'
 import Link from 'next/link'
 import Head from 'next/head'
-
+import { TMDB_IMAGE_URL, TMDB_MOVIE_SEARCH_URL, TMDB_URL } from '../URLs'
 export default function MovieSearch() {
+
 
     const [movies, setMovies] = useState([])
   
@@ -19,12 +20,12 @@ export default function MovieSearch() {
       }
     
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${movieName}&language=en-US&page=1`);
+        const response = await fetch(`${TMDB_MOVIE_SEARCH_URL}?api_key=${process.env.TMDB_API_KEY}&query=${movieName}&language=en-US&page=1`);
         const data = await response.json();
         const movieResults = data.results.slice(0, 5); // Limiting to first 5 results
     
         const castPromises = movieResults.map(async (movie) => {
-          const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`);
+          const creditsResponse = await fetch(`${TMDB_URL}/${movie.id}/credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`);
           const creditsData = await creditsResponse.json();
           return creditsData.cast.slice(0, 3); // Limiting to first 3 cast members
         });
@@ -37,7 +38,6 @@ export default function MovieSearch() {
         }));
     
         setMovies(updatedMovies);
-        console.log(updatedMovies)
       } catch (error) {
         console.error("Error fetching data:", error);
         setMovies([]);
@@ -73,7 +73,7 @@ export default function MovieSearch() {
                 <div key={index} className='mt-2 flex flex-col gap-2'>
                   <div className='flex gap-5'>
                     <Link href={`/components/${movie.title}/${movie.id}`}>
-                      <Image className='mx-2' src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} width={75} height={75} alt="" />
+                      <Image className='mx-2' src={`${TMDB_IMAGE_URL}${movie.poster_path}`} width={75} height={75} alt="" />
                     </Link>
                     <div className='flex flex-col gap-2'>
                       <p className='-mt-1 lg:mt-2 text-white text-[14px] lg:text-xl'> {movie.title} </p>
