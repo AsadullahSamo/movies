@@ -151,7 +151,7 @@ export default function Details() {
 						<div key={index}className='border-2 border-gray-100 w-[20%] lg:w-[15%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
 								<div key={index} className='border-2 border-gray-100 w-[20%] lg:w-[100%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
 									{actor.profile_path ?
-										<Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' />
+										<a href={`https://en.wikipedia.org/wiki/${actor.name}`} target='_blank'> <Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' /> </a>
 									:
 										<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
 									}
