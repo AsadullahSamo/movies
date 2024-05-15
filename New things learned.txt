@@ -1,5 +1,0 @@
-exploring and Researching APIs to tailor to project needs (such as TMDB and OMDB movie apis, in this project)
-Dynamic routing
-Promise.all() method of JS
-debouncing techniques to handle excessive API calls
-custom scrollbar design

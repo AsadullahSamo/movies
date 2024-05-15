@@ -16,6 +16,7 @@ export default function Details() {
 	const [actors, setActors] = useState('')
 	const [month, setMonth] = useState('')
 	const [loading, setLoading]	= useState("loading...")
+	const [cast, setCast] = useState([{name: '', character: '', profile_path: ''}])
 
 	useEffect(() => {
 		if (router.isReady) {
@@ -63,6 +64,12 @@ export default function Details() {
 				.then((response) => response.json())
 				.then((data, index) => {
 					setActors(data.cast.slice(0, 3).map(actor => actor.name).join(', '))
+					setCast(
+						data.cast.filter(actor => actor.known_for_department === "Acting")
+						.map(actor => (
+							{ name: actor.name, character: actor.character, profile_path: actor.profile_path}
+						))
+					)
 					setLoading("loaded")
 				})
 				.catch((error) => {
@@ -115,7 +122,7 @@ export default function Details() {
 								}
 								<ul className='mt-5 flex gap-5 justify-center lg:justify-start'>
 									{tmdbData.genres && tmdbData.genres.map((genre, index) => (								
-										<li key={index} className={`text-[#cdcdcd] rounded-full bg-[#1b1b1b] py-[6px] px-5 ${fonts.latoMedium}`}> {genre.name} </li>
+										<li key={index} className={`text-[#cdcdcd] rounded-full bg-[#1b1b1b] py-[4px] md:py-[6px] px-4 md:px-5 text-[14px] md:text-[16px] ${fonts.latoMedium}`}> {genre.name} </li>
 									))}
 								</ul>
 								<p className={`w-[90%] lg:w-[60%] text-[#cdcdcd] mx-5 md:mx-10 lg:mx-3 ${fonts.latoMedium} my-5`}> {tmdbData.overview} </p>
@@ -133,6 +140,29 @@ export default function Details() {
 				) : (
 					<> <Error /> </>
 				)}
+
+				<div className='flex justify-center my-10  w-[100%] h-24 bg-[#131313]'>
+					
+						<p className={`text-center self-center text-4xl text-[#e2df81] tracking-wide ${fonts.latoMedium}`}> CAST </p>
+				</div>
+
+				<div className='flex justify-center py-10 flex-wrap gap-5 '>
+					{cast && cast.map((actor, index) => (
+						<div className='border-2 border-gray-100 w-[20%] lg:w-[15%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
+								<div key={index} className='border-2 border-gray-100 w-[20%] lg:w-[100%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
+									{actor.profile_path ?
+										<Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' />
+									:
+										<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
+									}
+									<p className={`${fonts.latoBold} text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
+									<p className={`${fonts.latoBold} text-center pt-1 text-white`}> {actor.character} </p> 
+								</div>
+						</div>
+						))}
+
+				</div>
+
 				</section>
 		</div>
 	</>
