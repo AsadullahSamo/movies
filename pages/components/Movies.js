@@ -74,23 +74,21 @@ export default function FindMovies() {
 
         {/* Featured today Movies/TV Series */}
         <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Featured Today </p>
-        <nav className='mt-5 self-start mx-12 text-xl w-[80%] lg:w-[96%]'>
+        <nav className='mt-5 self-start mx-12 text-xl w-[80%] sm:w-[85%] md:w-[90%] lg:w-[93%] xl:w-[96%]'>
           <ul className='flex gap-5'>
             <li
               className={`hover:cursor-pointer ${
                 active === 'movies' ? 'text-white border-b-4 border-white' : 'text-[#7d7d7d]'
               } pb-[2px] px-5`}
               onClick={showFeaturedMovies}>
-              {' '}
-              Movies{' '}
+              Movies
             </li>
             <li
               className={`hover:cursor-pointer ${
                 active === 'series' ? 'text-white border-b-4 border-white' : 'text-[#7d7d7d]'
               } pb-[2px] px-5`}
               onClick={showFeaturedSeries}>
-              {' '}
-              Series{' '}
+              Series
             </li>
           </ul>
           <hr className='mt-[-2px] border-red-500 border-b-2' />
@@ -153,23 +151,21 @@ export default function FindMovies() {
 
         {/* Premiers and Announcements */}
         <p className={`text-[#EFD839] self-start mx-12 mt-20 text-3xl`}> Premiers and Announcements </p>
-        <nav className='mt-5 self-start mx-12 text-xl w-[80%] lg:w-[96%]'>
+        <nav className='mt-5 self-start mx-12 text-xl w-[80%] sm:w-[85%] md:w-[90%] lg:w-[93%] xl:w-[96%]'>
           <ul className='flex gap-5'>
             <li
               className={`hover:cursor-pointer ${
                 premierActive === 'premierMovies' ? 'text-white border-b-4 border-white' : 'text-[#7d7d7d]'
               } pb-[2px] px-5`}
               onClick={showPremierMovies}>
-              {' '}
-              Movies{' '}
+              Movies
             </li>
             <li
               className={`hover:cursor-pointer ${
                 premierActive === 'premierSeries' ? 'text-white border-b-4 border-white' : 'text-[#7d7d7d]'
               } pb-[2px] px-5`}
               onClick={showPremierSeries}>
-              {' '}
-              Series{' '}
+              Series
             </li>
           </ul>
           <hr className='mt-[-2px] border-red-500 border-b-2' />

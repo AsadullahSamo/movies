@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MovieSearch from './MovieSearch'
 import fonts from '../../styles/Fonts.module.css'
-import starIcon from '../../public/assets/icons/star-icon.svg'
 import plugError from '../../public/assets/icons/plug-error-illustration.svg'
 import Image from 'next/image'
 import Head from 'next/head'

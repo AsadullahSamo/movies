@@ -142,23 +142,25 @@ export default function Details() {
 				)}
 
 				<div className='flex justify-center my-10  w-[100%] h-24 bg-[#131313]'>
-					
-						<p className={`text-center self-center text-4xl text-[#e2df81] tracking-wide ${fonts.latoMedium}`}> CAST </p>
+					<p className={`text-center self-center text-4xl text-[#e2df81] tracking-wide ${fonts.latoMedium}`}> CAST </p>
 				</div>
 
 				<div className='flex justify-center py-10 flex-wrap gap-5 '>
 					{cast && cast.map((actor, index) => (
-						<div key={index} className='border-2 border-gray-100 w-[40%] md:w-[25%] lg:w-[15%] h-[330px] md:h-[420px] lg:h-[450px] rounded-lg mx-3 md:mx-5 lg:mx-0'> 
-							{actor.profile_path ?
-								<a href={`https://en.wikipedia.org/wiki/${actor.name}`} target='_blank'> <Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' /> </a>
-							:
-								<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
-							}
-							<p className={`${fonts.latoBold} text-[16px] md:text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
-							<p className={`${fonts.latoBold} text-center pt-1 text-white`}> {actor.character} </p> 
-						</div>
+					actor.profile_path ? (
+							<div key={index} className='border-2 border-gray-100 w-[40%] h-[330px] sm:w-[27%] sm:h-[375px] md:w-[25%] md:h-[450px] lg:w-[20%] lg:h-[460px] xl:w-[15%] xl:h-[450px] rounded-lg mx-3 md:mx-5 lg:mx-0'> 
+								{actor.profile_path ?
+									<a href={`https://en.wikipedia.org/wiki/${actor.name}`} target='_blank'> <Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt={actor.name} /> </a>
+								:
+									<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
+								}
+								<p className={`${fonts.latoBold} text-[14px] sm:text-[19px] md:text-[21px] lg:text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
+								<p className={`${fonts.latoBold} text-[14px] sm:text-[16px] md:text-[19px] lg:text-2xl text-center pt-1 text-white`}> {actor.character} </p> 
+							</div>
+					) : (
+						<div className='xl:bg-[#585858] rounded-xl w-[30%] md:w-[40%] lg:w-[15%] h-[330px] md:h-[420px] lg:h-[450px] animate-pulse'></div>
+					)
 					))}
-
 				</div>
 
 				</section>
