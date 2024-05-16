@@ -158,7 +158,7 @@ export default function Details() {
 								<p className={`${fonts.latoBold} text-[14px] sm:text-[16px] md:text-[19px] lg:text-2xl text-center pt-1 text-white`}> {actor.character} </p> 
 							</div>
 					) : (
-						<div className='xl:bg-[#585858] rounded-xl w-[30%] md:w-[40%] lg:w-[15%] h-[330px] md:h-[420px] lg:h-[450px] animate-pulse'></div>
+						<div key={index} className='xl:bg-[#585858] rounded-xl w-[30%] md:w-[40%] lg:w-[15%] h-[330px] md:h-[420px] lg:h-[450px] animate-pulse'></div>
 					)
 					))}
 				</div>
