@@ -96,7 +96,7 @@ export default function FindMovies() {
           <hr className='mt-[-2px] border-red-500 border-b-2' />
         </nav>
 
-        <div className='mb-10 max-w-[100%] overflow-hidden hover:overflow-auto transition-all duration-500 ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
+        <div className='mb-10 max-w-[100%] overflow-auto md:overflow-hidden hover:overflow-auto transition-all duration-500 ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap'>
           {featuredLoading === "loaded" ? (
             <>
               {featuredToday.results &&
@@ -175,7 +175,7 @@ export default function FindMovies() {
           <hr className='mt-[-2px] border-red-500 border-b-2' />
         </nav>
 
-        <div className={`mb-5 max-w-[100%] overflow-hidden hover:overflow-auto transition-all duration-500 ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap`}>
+        <div className={`mb-5 max-w-[100%] overflow-auto md:overflow-hidden hover:overflow-auto transition-all duration-500 ml-1 mr-1 self-center justify-center lg:justify-start lg:self-start flex h-[260px] lg:h-[450px] gap-5 flex-wrap lg:flex-nowrap`}>
           {premierLoading === "loaded" ? (
             <>
               {premiersAndAnnouncements.results &&

@@ -92,14 +92,14 @@ export default function Details() {
 
 		<div className='bg-black min-h-screen'>
 			<MovieSearch />
-				<div className='flex justify-between my-10  w-[100%] h-48 bg-[#131313]'>
-					<div className='ml-20'>
+				<div className='flex justify-between my-10 w-[100%] h-48 bg-[#131313]'>
+					<div className='ml-10 md:ml-16 lg:ml-20'>
 						<p className={`text-[#e2df81] tracking-wide ${fonts.latoMedium} self-start -mx-1 lg:mx-12 pt-10`}> MOVIE </p>
 						<p className={`text-white ${fonts.latoMedium} self-start -mx-1 lg:mx-12 text-2xl mt-2 lg:text-3xl`}> {tmdbData && tmdbData.title} </p>
 						<p className={`text-[#cdcdcd] ${fonts.latoMedium} self-start -mx-5 lg:mx-9 mt-2`}> <span className='ml-4'> {String(tmdbData.release_date).substring(0, 4)} </span> <span className='ml-3'> {`${Number(tmdbData.runtime/60).toPrecision(1)}h ${tmdbData.runtime%60 === 0 ? "" : `${tmdbData.runtime%60}m`}`} </span> </p>
 					</div>
 
-					<div className='mr-20 flex gap-3'>
+					<div className='mr-10 md:mr-16 lg:mr-20 flex gap-3'>
 						<Image src={starIcon} width={50} height={50} alt='Star Icon' /> 
 						<p className={`${fonts.latoMedium} text-[24px] text-white self-center`}> {omdbData.imdbRating} </p>
 					</div>
