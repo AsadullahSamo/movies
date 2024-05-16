@@ -148,18 +148,16 @@ export default function Details() {
 
 				<div className='flex justify-center py-10 flex-wrap gap-5 '>
 					{cast && cast.map((actor, index) => (
-						<div key={index}className='border-2 border-gray-100 w-[20%] lg:w-[15%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
-								<div key={index} className='border-2 border-gray-100 w-[20%] lg:w-[100%] h-[450px] rounded-lg mx-5 lg:mx-0'> 
-									{actor.profile_path ?
-										<a href={`https://en.wikipedia.org/wiki/${actor.name}`} target='_blank'> <Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' /> </a>
-									:
-										<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
-									}
-									<p className={`${fonts.latoBold} text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
-									<p className={`${fonts.latoBold} text-center pt-1 text-white`}> {actor.character} </p> 
-								</div>
+						<div key={index} className='border-2 border-gray-100 w-[40%] md:w-[25%] lg:w-[15%] h-[330px] md:h-[420px] lg:h-[450px] rounded-lg mx-3 md:mx-5 lg:mx-0'> 
+							{actor.profile_path ?
+								<a href={`https://en.wikipedia.org/wiki/${actor.name}`} target='_blank'> <Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt='Movie Poster' /> </a>
+							:
+								<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
+							}
+							<p className={`${fonts.latoBold} text-[16px] md:text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
+							<p className={`${fonts.latoBold} text-center pt-1 text-white`}> {actor.character} </p> 
 						</div>
-						))}
+					))}
 
 				</div>
 
