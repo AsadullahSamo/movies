@@ -148,14 +148,14 @@ export default function Details() {
 				<div className='flex justify-center py-10 flex-wrap gap-5 '>
 					{cast && cast.map((actor, index) => (
 					actor.profile_path ? (
-							<div key={index} className='border-2 border-gray-100 w-[40%] h-[330px] sm:w-[27%] sm:h-[375px] md:w-[25%] md:h-[450px] lg:w-[20%] lg:h-[460px] xl:w-[15%] xl:h-[450px] rounded-lg mx-3 md:mx-5 lg:mx-0'> 
+							<div key={index} className='border-2 border-gray-100 w-[40%] h-[370px] sm:w-[27%] sm:h-[420px] md:w-[25%] md:h-[465px] lg:w-[20%] lg:h-[470px] xl:w-[15%] xl:h-[480px] rounded-lg mx-3 md:mx-5 lg:mx-0'> 
 								{actor.profile_path ?
 									<a href={`https://en.wikipedia.org/wiki/${actor.name}`} target='_blank'> <Image src={`${TMDB_IMAGE_URL}${actor.profile_path}`} className="pb-1 rounded-xl" style={{objectFit: "cover"}} width={250} height={250} alt={actor.name} /> </a>
 								:
 									<div className='bg-[#585858] rounded-xl h-48 w-48 animate-pulse'></div>
 								}
-								<p className={`${fonts.latoBold} text-[14px] sm:text-[19px] md:text-[21px] lg:text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
-								<p className={`${fonts.latoBold} text-[14px] sm:text-[16px] md:text-[19px] lg:text-2xl text-center pt-1 text-white`}> {actor.character} </p> 
+								<p className={`${fonts.latoBold} px-1 text-[14px] sm:text-[19px] md:text-[21px] lg:text-2xl text-center pt-1 text-[#615f61]`}> {actor.name} </p> 
+								<p className={`${fonts.latoBold} text-[14px] sm:text-[16px] md:text-[16px] lg:text-[17px] text-center pt-1 px-1 sm:px-1 md:px-1 lg:px-1 text-white`}> {actor.character} </p> 
 							</div>
 					) : (
 						<div key={index} className='bg-[#585858] mx-3 md:mx-5 lg:mx-0 rounded-xl w-[40%] h-[330px] sm:w-[27%] sm:h-[375px] md:w-[25%] md:h-[450px] lg:w-[20%] lg:h-[460px] xl:w-[15%] xl:h-[450px] animate-pulse'></div>
